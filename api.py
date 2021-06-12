@@ -1,6 +1,7 @@
 import flask
 import datetime
 import mysql.connector
+from flask import jsonify
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -13,15 +14,17 @@ def home():
 
 @app.route('/get2ginfos', methods=['GET'])
 def get2ginfos():
-  cnx = mysql.connector.connect(user='root', password='password', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
   query = ("SELECT * FROM db_phones.2gbandstable")
 
   cursor.execute(query)
 
-  for item in cursor:
-    print("{}".format(item))
+  rows = cursor.fetchall()
+  resp=jsonify(rows)
+  
+  return resp
 
   cursor.close()
   cnx.close()
