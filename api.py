@@ -23,17 +23,36 @@ class create_dict(dict):
         self[key] = value
 
 @app.route('/announcedinfos', methods=['GET'])
-def get2ginfos():
-  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+def getannouncedinfos():
+  cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
-  query = ("SELECT announcedInfo, count(uniqueID) as count  FROM db_phones.announcedtable group by (announcedInfo)")
+  query = ("SELECT announcedInfo, count(uniqueID) as count  FROM db_phones.announcedTable group by (announcedInfo)")
   cursor.execute(query)
   rows = cursor.fetchall()
 
   results=[]
   for row in rows:
     results.append({"y":row[1],"name":row[0]})
+
+  resp=jsonify(results)
+  resp.headers.add('Access-Control-Allow-Origin', '*')
+  cursor.close()
+  cnx.close()
+  return resp
+
+@app.route('/2Gbandsinfos', methods=['GET'])
+def get2ginfos():
+  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+  cursor = cnx.cursor()
+
+  query = ("SELECT 2Gband, count(uniqueID) as count  FROM db_phones.2GbandsTable group by (2Gband)")
+  cursor.execute(query)
+  rows = cursor.fetchall()
+
+  results=[]
+  for row in rows:
+    results.append({"data":row[1],"name":row[0]})
 
   resp=jsonify(results)
   resp.headers.add('Access-Control-Allow-Origin', '*')
