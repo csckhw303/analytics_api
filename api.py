@@ -24,7 +24,7 @@ class create_dict(dict):
 
 @app.route('/announcedinfos', methods=['GET'])
 def getannouncedinfos():
-  cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
   query = ("SELECT announcedInfo, count(uniqueID) as count  FROM db_phones.announcedTable group by (announcedInfo)")
@@ -52,7 +52,7 @@ def get2ginfos():
 
   results=[]
   for row in rows:
-    results.append({"data":row[1],"name":row[0]})
+    results.append({"y":row[1],"name":row[0]})
 
   resp=jsonify(results)
   resp.headers.add('Access-Control-Allow-Origin', '*')
