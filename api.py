@@ -86,14 +86,14 @@ def getwlaninfos():
   cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
-  query = ("SELECT wlan, count(uniqueID) as count  FROM db_phones.wlanTable group by (wlan)")
+  query = ("SELECT wlan, GROUP_CONCAT(uniqueID) FROM wlantable GROUP BY wlan")
   cursor.execute(query)
   rows = cursor.fetchall()
 
   results=[]
 
   for row in rows:
-    results.append({"y":row[1],"name":row[0]})
+    results.append({"ids":row[1],"wlan":row[0]})
 
   resp=jsonify(results)
   resp.headers.add('Access-Control-Allow-Origin', '*')
@@ -113,14 +113,15 @@ def search():
         cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
         cursor = cnx.cursor()
 
-        query = ("SELECT *  FROM db_phones.phones where brand LIKE '%" + req['title'] + "%'")
+        query = ("SELECT *  FROM db_phones.phones where uniqueid in (" + req['wlen'] + ")")
+        app.logger.info(query)
         cursor.execute(query)
         rows = cursor.fetchall()
 
         results=[]
 
         for row in rows:
-           results.append({"y":row[1],"name":row[0]})
+           results.append({"name":row[2],"id":row[0], "image":row[4]})
 
         resp=jsonify(results)
         cursor.close()
