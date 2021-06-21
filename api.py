@@ -101,6 +101,26 @@ def getwlaninfos():
   cnx.close()
   return resp
 
+@app.route('/chipsetinfos', methods=['GET'])
+def getchipsetinfos():
+  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+  cursor = cnx.cursor()
+
+  query = ("select chipset, GROUP_CONCAT(uniqueID) from db_phones.phones GROUP BY chipset")
+  cursor.execute(query)
+  rows = cursor.fetchall()
+
+  results=[]
+
+  for row in rows:
+    results.append({"ids":row[1],"chipset":row[0]})
+
+  resp=jsonify(results)
+  resp.headers.add('Access-Control-Allow-Origin', '*')
+  cursor.close()
+  cnx.close()
+  return resp
+
 @app.route('/search', methods=['OPTIONS','POST'])
 def search():
 
