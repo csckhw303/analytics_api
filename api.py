@@ -106,7 +106,7 @@ def getchipsetinfos():
   cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
-  query = ("select chipset, GROUP_CONCAT(uniqueID) from db_phones.phones GROUP BY chipset")
+  query = ("select chipset, GROUP_CONCAT(uniqueID) from db_phones.phones GROUP BY chipset ")
   cursor.execute(query)
   rows = cursor.fetchall()
 
@@ -133,7 +133,7 @@ def search():
         cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
         cursor = cnx.cursor()
 
-        query = ("SELECT *  FROM db_phones.phones where uniqueid in (" + req['wlen'] + ")")
+        query = ("SELECT *  FROM db_phones.phones where uniqueid in (" + req['wlan'] + ")" + " or uniqueid in (" + req['chipset'] + ")")
         app.logger.info(query)
         cursor.execute(query)
         rows = cursor.fetchall()
