@@ -1,0 +1,34 @@
+INSTALLATIONS:
+What needs to be installed:
+Node.js (to get npm command)
+“git clone https://github.com/goelashwin36/react-workshop-start.git”
+
+Then:
+“npm install” (installs all node modules necessary to run application)
+
+If there is any libraries that are imported but not installed, use “npm install [library name]”
+
+The below commands are for api.py:
+“Pip install mysql connector-python”
+“Pip install flask”
+“Pip install -u flask-cors”
+
+
+RUNNING CODE:
+For the front-end portion:
+Go into the analytics folder
+Run ““npm start”
+For the api:
+python3 api.py
+
+OVERVIEW OF CODE:
+An brief summary of the flow of the code:
+React Calls action in redux to grab data
+Action calls function that calls api (which handles a response when sending a specific url)
+Api.py determines what data to retrieve from the database based on url 
+Returns data to action, create object (with type and payload/data)
+Dispatch that object to reducers, go thru every reducer and check for matching type of reducer
+Reducer: connects and matches the data retrieved from database to the global state/variable
+Reducer returns object to the store (place for global states)
+In react page, mapStateToProp maps local variable inside of props (component property) to the global state in store 
+Then display that prop variable on web page

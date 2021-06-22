@@ -25,7 +25,7 @@ class create_dict(dict):
 
 @app.route('/announcedinfos', methods=['GET'])
 def getannouncedinfos():
-  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+  cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
   query = ("SELECT announcedInfo, count(uniqueID) as count  FROM db_phones.announcedTable group by (announcedInfo)")
@@ -44,7 +44,7 @@ def getannouncedinfos():
 
 @app.route('/2Gbandsinfos', methods=['GET'])
 def get2GBandinfos():
-  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+  cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
   query = ("SELECT 2Gband, count(uniqueID) as count  FROM db_phones.2GbandsTable group by (2Gband)")
@@ -63,7 +63,7 @@ def get2GBandinfos():
 
 @app.route('/SIMinfos', methods=['GET'])
 def getSIMinfos():
-  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+  cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
   query = ("SELECT SIM, count(uniqueID) as count  FROM db_phones.SIMTable group by (SIM)")
@@ -83,10 +83,10 @@ def getSIMinfos():
 
 @app.route('/wlaninfos', methods=['GET'])
 def getwlaninfos():
-  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+  cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
-  query = ("SELECT wlan, GROUP_CONCAT(uniqueID) FROM wlantable GROUP BY wlan")
+  query = ("SELECT wlan, GROUP_CONCAT(uniqueID) FROM wlanTable GROUP BY wlan")
   cursor.execute(query)
   rows = cursor.fetchall()
 
@@ -103,7 +103,7 @@ def getwlaninfos():
 
 @app.route('/chipsetinfos', methods=['GET'])
 def getchipsetinfos():
-  cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+  cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
   cursor = cnx.cursor()
 
   query = ("select chipset, GROUP_CONCAT(uniqueID) from db_phones.phones GROUP BY chipset ")
@@ -130,7 +130,7 @@ def search():
   elif request.method == 'POST': 
         req = request.get_json()
         app.logger.info(req)
-        cnx = mysql.connector.connect(user='root', password='Skydrive0404', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
+        cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='db_phones',auth_plugin='mysql_native_password')
         cursor = cnx.cursor()
 
         query = ("SELECT *  FROM db_phones.phones where uniqueid in (" + req['wlan'] + ")" + " or uniqueid in (" + req['chipset'] + ")")
